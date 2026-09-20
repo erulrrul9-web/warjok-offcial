@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>𝚆𝙴𝙻𝙲𝙾𝙼𝙴 𝚃𝙷𝙴 𝚆𝙰𝚁𝙹𝙾𝙺 𝙾𝙵𝙵𝙸𝙲𝙸𝙰𝙻</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body { background: #0a0a0a; color: #eee; min-height: 100vh; overflow-x: hidden; }
+  .screen { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  /* Splash */
+  #splash {
+    height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; background: radial-gradient(circle at center, #1a0000, #000);
+  }
+  #splash h1 {
+    font-size: 2.5rem; color: #ff3366; text-shadow: 0 0 20px #ff3366, 0 0 40px #ff0044;
+    letter-spacing: 4px; margin-bottom: 30px; animation: glow 2s infinite alternate; padding: 0 15px;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 20px #ff3366, 0 0 40px #ff0044; }
+    to { text-shadow: 0 0 40px #ff3366, 0 0 80px #ff0044, 0 0 120px #ff0044; }
+  }
+  #splash button {
+    padding: 15px 40px; font-size: 1.2rem; background: transparent; color: #ff3366;
+    border: 2px solid #ff3366; border-radius: 50px; cursor: pointer; transition: 0.3s;
+    font-weight: bold; letter-spacing: 2px;
+  }
+  #splash button:hover { background: #ff3366; color: #000; box-shadow: 0 0 30px #ff3366; }
+
+  /* Menu */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 30px; }
+  .card {
+    background: #1a1a1a; border: 1px solid #333; border-radius: 15px; padding: 25px 15px;
+    text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px #000;
+  }
+  .card:hover {
+    background: #2a2a2a; border-color: #ff3366; box-shadow: 0 0 20px #ff336688; transform: translateY(-5px);
+  }
+  .card h3 { color: #ff3366; margin-bottom: 10px; font-size: 1.3rem; }
+  .card p { font-size: 0.9rem; color: #aaa; }
+
+  .back-btn {
+    display: inline-block; margin-bottom: 20px; padding: 8px 20px; background: #333; color: #fff;
+    border: none; border-radius: 20px; cursor: pointer; font-weight: bold;
+  }
+  .back-btn:hover { background: #ff3366; }
+
+  .fitur-box { background: #111; border-radius: 15px; padding: 25px; margin-top: 20px; border: 1px solid #333; }
+  .fitur-box h2 { color: #ff3366; margin-bottom: 15px; }
+  .fitur-box input, .fitur-box textarea {
+    width: 100%; padding: 10px; margin: 8px 0; background: #222; border: 1px solid #444;
+    color: #eee; border-radius: 8px; font-family: inherit;
+  }
+  .fitur-box button {
+    padding: 10px 25px; background: #ff3366; color: #000; border: none; border-radius: 8px;
+    font-weight: bold; cursor: pointer; margin-top: 10px;
+  }
+  .fitur-box button:hover { background: #ff6699; }
+  .fitur-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .output {
+    margin-top: 20px; padding: 15px; background: #0a0a0a; border-radius: 10px;
+    border: 1px dashed #444; min-height: 40px; text-align: center;
+  }
+  .output img { max-width: 100%; border-radius: 10px; margin-top: 10px; }
+  .output .error { color: #ff4444; font-weight: bold; }
+  .output .loading { color: #ffaa00; font-weight: bold; }
+
+  /* Memory game */
+  .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; margin: 20px auto; }
+  .memory-card {
+    aspect-ratio: 1; background: #333; border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; cursor: pointer; transition: 0.3s; color: transparent; user-select: none;
+  }
+  .memory-card.flipped { background: #ff3366; color: #fff; }
+  .memory-card.matched { background: #00cc66; color: #fff; cursor: default; }
+
+  /* Kuis */
+  .quiz-option {
+    display: block; width: 100%; padding: 10px; margin: 5px 0; background: #222;
+    border: 1px solid #444; color: #eee; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit;
+  }
+  .quiz-option:hover { background: #333; }
+  .quiz-option.correct { background: #00cc66; }
+  .quiz-option.wrong { background: #cc0000; }
+
+  .footer { text-align: center; margin-top: 40px; padding: 20px; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" class="screen active">
+  <h1>𝚆𝙴𝙻𝙲𝙾𝙼𝙴 𝚃𝙷𝙴 𝚆𝙰𝚁𝙹𝙾𝙺 𝙾𝙵𝙵𝙸𝙲𝙸𝙰𝙻</h1>
+  <button onclick="showScreen('menu')">MASUK</button>
+</div>
+
+<!-- MENU -->
+<div id="menu" class="screen">
+  <h2 style="text-align:center; color:#ff3366; margin-top:20px;">Menu Utama</h2>
+  <div class="menu-grid">
+    <div class="card" onclick="showFeature('iqc')"><h3>IQC</h3><p>Tes IQ receh</p></div>
+    <div class="card" onclick="showFeature('fakeff')"><h3>FakeFF</h3><p>Fake chat 1 orang (gambar)</p></div>
+    <div class="card" onclick="showFeature('fakeffduo')"><h3>FakeFF Duo</h3><p>Fake chat 2 orang (gambar)</p></div>
+    <div class="card" onclick="showFeature('memory')"><h3>Memory Game</h3><p>Nginget pasangan</p></div>
+    <div class="card" onclick="showFeature('kuis')"><h3>Kuis Receh</h3><p>Tebak-tebakan</p></div>
+  </div>
+</div>
+
+<!-- IQC -->
+<div id="feature-iqc" class="screen">
+  <button class="back-btn" onclick="showScreen('menu')">← Kembali</button>
+  <div class="fitur-box">
+    <h2>IQC - Tes IQ Receh</h2>
+    <p>Jawab 5 pertanyaan ini. Skor akhir bakal nunjukin level IQ receh lo.</p>
+    <div id="iqc-container"></div>
+    <button onclick="hitungIQC()">Lihat Hasil</button>
+    <div id="iqc-output" class="output"></div>
+  </div>
+</div>
+
+<!-- FAKEFF -->
+<div id="feature-fakeff" class="screen">
+  <button class="back-btn" onclick="showScreen('menu')">← Kembali</button>
+  <div class="fitur-box">
+    <h2>FakeFF - Fake Chat (Gambar)</h2>
+    <p>Masukkan nickname, nanti bot generate gambar chat Free Fire palsu.</p>
+    <input type="text" id="ff-nick" placeholder="Contoh: Rulss">
+    <button id="ff-btn" onclick="generateFakeFF()">Generate</button>
+    <div id="ff-output" class="output"></div>
+  </div>
+</div>
+
+<!-- FAKEFF DUO -->
+<div id="feature-fakeffduo" class="screen">
+  <button class="back-btn" onclick="showScreen('menu')">← Kembali</button>
+  <div class="fitur-box">
+    <h2>FakeFF Duo - Fake Chat 2 Orang (Gambar)</h2>
+    <p>Masukkan dua username, pisahkan dengan tanda <b>|</b>.</p>
+    <input type="text" id="duo-input" placeholder="Contoh: Rulss|Modders">
+    <button id="duo-btn" onclick="generateFakeFFDuo()">Generate</button>
+    <div id="duo-output" class="output"></div>
+  </div>
+</div>
+
+<!-- MEMORY -->
+<div id="feature-memory" class="screen">
+  <button class="back-btn" onclick="showScreen('menu')">← Kembali</button>
+  <div class="fitur-box">
+    <h2>Memory Game</h2>
+    <p>Cocokin pasangan kartu. Klik dua kartu, kalau sama bakal kebuka.</p>
+    <div class="memory-grid" id="memory-grid"></div>
+    <button onclick="initMemory()">Reset Game</button>
+    <div id="memory-output" class="output"></div>
+  </div>
+</div>
+
+<!-- KUIS -->
+<div id="feature-kuis" class="screen">
+  <button class="back-btn" onclick="showScreen('menu')">← Kembali</button>
+  <div class="fitur-box">
+    <h2>Kuis Receh</h2>
+    <div id="kuis-container"></div>
+    <button onclick="initKuis()">Mulai Kuis</button>
+    <div id="kuis-output" class="output"></div>
+  </div>
+</div>
+
+<div class="footer">&copy; 2026 Warjok Official - Web hiburan.</div>
+
+<script>
+// ===== NAVIGASI =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function showFeature(name) {
+  showScreen('feature-' + name);
+  if (name === 'iqc') initIQC();
+  if (name === 'memory') initMemory();
+  if (name === 'kuis') initKuis();
+}
+
+// ===== IQC =====
+const iqcSoal = [
+  { q: "1. Apa yang selalu naik tapi gak pernah turun?", a: ["Umur","Berat badan","Harga","Semangat"], c: 0 },
+  { q: "2. Benda apa yang kalau dipegang malah bikin sakit?", a: ["Bantal","Duri","Handuk","Selimut"], c: 1 },
+  { q: "3. Hewan apa yang punya banyak kaki?", a: ["Kucing","Ayam","Kaki seribu","Ikan"], c: 2 },
+  { q: "4. Apa yang bisa lo pegang tapi gak bisa lo liat?", a: ["Angin","Batu","Air","Udara"], c: 0 },
+  { q: "5. Kalau ada 3 apel dan lo ambil 2, lo punya berapa?", a: ["1","2","3","0"], c: 1 }
+];
+function initIQC() {
+  const c = document.getElementById('iqc-container');
+  c.innerHTML = '';
+  iqcSoal.forEach((s, i) => {
+    let html = `<p style="margin-top:15px; font-weight:bold;">${s.q}</p>`;
+    s.a.forEach((opt, j) => {
+      html += `<label style="display:block; margin:5px 0; cursor:pointer;"><input type="radio" name="iqc${i}" value="${j}"> ${opt}</label>`;
+    });
+    c.innerHTML += html;
+  });
+  document.getElementById('iqc-output').innerText = '';
+}
+function hitungIQC() {
+  let skor = 0;
+  iqcSoal.forEach((s, i) => {
+    const sel = document.querySelector(`input[name="iqc${i}"]:checked`);
+    if (sel && parseInt(sel.value) === s.c) skor++;
+  });
+  let pesan = skor === 5 ? 'IQ Lo jenius! Tapi boong, ini cuma receh.' : skor >= 3 ? 'Lumayan pinter juga.' : 'Yah, belajar lagi dek.';
+  document.getElementById('iqc-output').innerText = `Skor: ${skor}/5\n${pesan}`;
+}
+
+// ===== FAKEFF (GAMBAR VIA BACKEND) =====
+async function generateFakeFF() {
+  const nick = document.getElementById('ff-nick').value.trim();
+  const out = document.getElementById('ff-output');
+  const btn = document.getElementById('ff-btn');
+
+  if (!nick) { out.innerHTML = '<span class="error">Nickname wajib diisi!</span>'; return; }
+
+  out.innerHTML = '<span class="loading">⏳ Lagi generate... sabar.</span>';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`/api/fakeff?nickname=${encodeURIComponent(nick)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    out.innerHTML = `<p style="color:#00cc66; font-weight:bold;">✅ BERHASIL!</p><img src="${url}" alt="FakeFF">`;
+  } catch (e) {
+    out.innerHTML = `<span class="error">❌ Gagal: ${e.message}</span>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ===== FAKEFF DUO (GAMBAR VIA BACKEND) =====
+async function generateFakeFFDuo() {
+  const input = document.getElementById('duo-input').value.trim();
+  const out = document.getElementById('duo-output');
+  const btn = document.getElementById('duo-btn');
+
+  const [u1, u2] = input.split('|').map(v => v.trim());
+  if (!u1 || !u2) {
+    out.innerHTML = '<span class="error">Format salah! Gunakan: Username1|Username2</span>';
+    return;
+  }
+
+  out.innerHTML = '<span class="loading">⏳ Lagi generate... sabar.</span>';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`/api/fakeffduo?username1=${encodeURIComponent(u1)}&username2=${encodeURIComponent(u2)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    out.innerHTML = `<p style="color:#00cc66; font-weight:bold;">✅ BERHASIL!</p><img src="${url}" alt="FakeFF Duo">`;
+  } catch (e) {
+    out.innerHTML = `<span class="error">❌ Gagal: ${e.message}</span>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ===== MEMORY =====
+const memoryIcons = ['🍎','🍌','🍇','🍒','🥑','🍍','🥝','🍑'];
+let memoryFlipped = [], memoryMatched = 0, memoryLock = false;
+function initMemory() {
+  const cards = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
+  memoryFlipped = []; memoryMatched = 0; memoryLock = false;
+  const grid = document.getElementById('memory-grid');
+  grid.innerHTML = '';
+  cards.forEach((icon) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.icon = icon;
+    card.innerText = icon;
+    card.addEventListener('click', () => flipMemoryCard(card));
+    grid.appendChild(card);
+  });
+  document.getElementById('memory-output').innerText = 'Klik kartu buat mulai.';
+}
+function flipMemoryCard(card) {
+  if (memoryLock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  memoryFlipped.push(card);
+  if (memoryFlipped.length === 2) {
+    memoryLock = true;
+    const [a, b] = memoryFlipped;
+    if (a.dataset.icon === b.dataset.icon) {
+      a.classList.add('matched'); b.classList.add('matched'); memoryMatched++;
+      memoryFlipped = []; memoryLock = false;
+      document.getElementById('memory-output').innerText = `Cocok! (${memoryMatched}/8)`;
+      if (memoryMatched === 8) document.getElementById('memory-output').innerText = 'Selamat! Lo menang!';
+    } else {
+      setTimeout(() => {
+        a.classList.remove('flipped'); b.classList.remove('flipped');
+        memoryFlipped = []; memoryLock = false;
+      }, 800);
+    }
+  }
+}
+
+// ===== KUIS =====
+const kuisSoal = [
+  { q: "Ibu kota Indonesia?", o: ["Jakarta","Bandung","Surabaya","Medan"], c: 0 },
+  { q: "1 + 1 = ?", o: ["3","2","11","0"], c: 1 },
+  { q: "Hewan yang bisa terbang?", o: ["Kucing","Ayam","Burung","Ikan"], c: 2 },
+  { q: "Warna langit cerah?", o: ["Merah","Biru","Hijau","Kuning"], c: 1 },
+  { q: "Presiden pertama Indonesia?", o: ["Soeharto","Habibie","Soekarno","Jokowi"], c: 2 }
+];
+let kuisIndex = 0, kuisSkor = 0;
+function initKuis() {
+  kuisIndex = 0; kuisSkor = 0; tampilKuis();
+  document.getElementById('kuis-output').innerText = '';
+}
+function tampilKuis() {
+  const c = document.getElementById('kuis-container');
+  if (kuisIndex >= kuisSoal.length) {
+    c.innerHTML = `<p style="font-weight:bold;">Kuis selesai! Skor lo: ${kuisSkor}/${kuisSoal.length}</p>`;
+    return;
+  }
+  const s = kuisSoal[kuisIndex];
+  let html = `<p style="font-weight:bold;">${s.q}</p>`;
+  s.o.forEach((opt, i) => { html += `<button class="quiz-option" onclick="jawabKuis(${i})">${opt}</button>`; });
+  c.innerHTML = html;
+}
+function jawabKuis(pilihan) {
+  const s = kuisSoal[kuisIndex];
+  const output = document.getElementById('kuis-output');
+  if (pilihan === s.c) { kuisSkor++; output.innerText = 'Bener!'; }
+  else { output.innerText = `Salah! Jawaban bener: ${s.o[s.c]}`; }
+  kuisIndex++; tampilKuis();
+}
+</script>
+</body>
+</html>
